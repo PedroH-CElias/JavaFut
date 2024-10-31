@@ -34,6 +34,14 @@ public class Equipe implements EstatisticasService {
         this.nome = nome;
     }
 
+    public List<Jogador> getJogadorList() {
+        return jogadorList;
+    }
+
+    public Treinador getTreinador() {
+        return treinador;
+    }
+
     @Override
     public void exibirDetalhes(Object equipe) {
 

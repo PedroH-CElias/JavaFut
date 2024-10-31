@@ -1,7 +1,12 @@
 package application;
 
+import entities.Campeonato;
+import entities.Equipe;
 import services.MenuService;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -9,7 +14,14 @@ public class Main {
 
         Scanner sc = new Scanner(System.in);
 
-        MenuService.exibirMenuOpcoes();
+        Equipe equipe1 = new Equipe("Santos");
+        Equipe equipe2 = new Equipe("Vasco");
+
+        List<Equipe> equipesIniciais = Arrays.asList(equipe1, equipe2);
+
+        Campeonato campeonato = new Campeonato(equipesIniciais);
+
+        MenuService.exibirMenuOpcoes(campeonato);
 
 
         sc.close();
