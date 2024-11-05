@@ -42,6 +42,10 @@ public class Equipe implements EstatisticasService {
         return treinador;
     }
 
+    public void setTreinador(Treinador treinador) {
+        this.treinador = treinador;
+    }
+
     @Override
     public void exibirDetalhes(Object equipe) {
 

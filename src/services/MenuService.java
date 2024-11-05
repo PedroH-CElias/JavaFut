@@ -1,20 +1,20 @@
 package services;
 
-import entities.Campeonato;
-import entities.Equipe;
-import entities.Jogador;
-import entities.Treinador;
+import entities.*;
 
 import java.io.IOException;
 import java.util.Scanner;
 
 public class MenuService {
+    private Campeonato campeonato;
 
-    public static void exibirTitulo() {
+    public void exibirTitulo() {
         System.out.println("***** JAVA FUT *****\n");
     }
 
-    public static void exibirMenuOpcoes(Campeonato campeonato) {
+    public void exibirMenuOpcoes(Campeonato campeonato) {
+        this.campeonato = campeonato;
+
         Scanner sc = new Scanner(System.in);
         exibirTitulo();
         System.out.println("1 - Cadastrar Jogador.");
@@ -32,39 +32,49 @@ public class MenuService {
             case 1:
                 if (campeonato.getEquipes().isEmpty()) {
                     System.out.println("Não há equipes cadastradas!");
-                }
-                else {
-                    String equipe = escolherEquipe();
-                    for (Equipe e : campeonato.getEquipes()) {
-                        if(e.getNome().equals(equipe)){
-                            cadastarJogador(e);
-                            break;
-                        }
-                        else {
+                } else {
+                    String equipeEscolhida = escolherEquipe();
+                    for (Equipe equipe : campeonato.getEquipes()) {
+                        if (equipe.getNome().equals(equipeEscolhida)) {
+                            cadastarJogador(equipe);
+                        } else {
                             System.out.println("Equipe não cadastrada!");
+                            try {
+                                Thread.sleep(2000);
+                            } catch (InterruptedException e) {
+                                throw new RuntimeException(e);
+                            }
+
+                            exibirMenuOpcoes(campeonato);
                         }
+                        break;
                     }
                 }
                 break;
             case 2:
                 if (campeonato.getEquipes().isEmpty()) {
                     System.out.println("Não há equipes cadastradas!");
-                }
-                else {
-                    String equipe = escolherEquipe();
-                    for (Equipe e : campeonato.getEquipes()) {
-                        if(e.getNome().equals(equipe)){
-                            cadastarTreinador(e);
-                            break;
-                        }
-                        else {
+                } else {
+                    String equipeEscolhida = escolherEquipe();
+                    for (Equipe equipe : campeonato.getEquipes()) {
+                        if (equipe.getNome().equals(equipeEscolhida)) {
+                            cadastarTreinador(equipe);
+                        } else {
                             System.out.println("Equipe não cadastrada!");
+                            try {
+                                Thread.sleep(2000);
+                            } catch (InterruptedException e) {
+                                throw new RuntimeException(e);
+                            }
+
+                            exibirMenuOpcoes(campeonato);
                         }
+                        break;
                     }
                 }
                 break;
             case 3:
-                System.out.println("c");
+                simularPartida();
                 break;
             case 4:
                 System.out.println("d");
@@ -73,23 +83,26 @@ public class MenuService {
                 System.out.println("e");
                 break;
             case 6:
-
                 if (campeonato.getEquipes().isEmpty()) {
                     System.out.println("Não há equipes cadastradas!");
-                }
-                else {
-                    String equipe = escolherEquipe();
-                    for (Equipe e : campeonato.getEquipes()) {
-                        if(e.getNome().equals(equipe)){
-                            exibirDetalhesEquipe(e);
-                            break;
-                        }
-                        else {
+                } else {
+                    String equipeEscolhida = escolherEquipe();
+                    for (Equipe equipe : campeonato.getEquipes()) {
+                        if (equipe.getNome().equals(equipeEscolhida)) {
+                            exibirDetalhesEquipe(equipe);
+                        } else {
                             System.out.println("Equipe não cadastrada!");
+                            try {
+                                Thread.sleep(2000);
+                            } catch (InterruptedException e) {
+                                throw new RuntimeException(e);
+                            }
+
+                            exibirMenuOpcoes(campeonato);
                         }
+                        break;
                     }
                 }
-
                 break;
             case 7:
                 System.out.println("g");
@@ -105,7 +118,7 @@ public class MenuService {
         sc.close();
     }
 
-    public static void cadastarJogador(Equipe equipe) {
+    public void cadastarJogador(Equipe equipe) {
         Scanner sc = new Scanner(System.in);
 
         limparConsole();
@@ -153,12 +166,12 @@ public class MenuService {
         }
 
         limparConsole();
-        //exibirMenuOpcoes();
+        exibirMenuOpcoes(campeonato);
 
         sc.close();
     }
 
-    public static void cadastarTreinador(Equipe equipe) {
+    public void cadastarTreinador(Equipe equipe) {
         Scanner sc = new Scanner(System.in);
 
         limparConsole();
@@ -190,7 +203,7 @@ public class MenuService {
         Integer qtdEquipesTreinadas = sc.nextInt();
         treinador.setQuantidadeEquipesTreinadas(qtdEquipesTreinadas);
 
-
+        equipe.setTreinador(treinador);
 
         System.out.print("\n\nTREINADOR CADASTRADO COM SUCESSO!");
 
@@ -201,30 +214,58 @@ public class MenuService {
         }
 
         limparConsole();
-        //exibirMenuOpcoes();
+        exibirMenuOpcoes(campeonato);
 
         sc.close();
     }
 
-    public static void exibirDetalhesEquipe(Equipe equipe){
+    public void simularPartida() {
+        Scanner sc = new Scanner(System.in);
+        Partida partida = new Partida();
+        System.out.print("Digite a primeira equipe: ");
+        String equipe1 = sc.nextLine();
+        System.out.print("Digite a segunda equipe: ");
+        String equipe2 = sc.nextLine();
+
+        for (Equipe equipe : campeonato.getEquipes()) {
+            if (equipe.getNome().equals(equipe1) || equipe.getNome().equals(equipe2)) {
+                partida.adicionarEquipe(equipe);
+            }
+        }
+
+        System.out.println(partida.simularPartida());
+
+        sc.close();
+    }
+
+    public void exibirDetalhesEquipe(Equipe equipe) {
+        Scanner sc = new Scanner(System.in);
         System.out.println("Equipe: " + equipe.getNome());
-        System.out.println("Treinador: " +  equipe.getTreinador());
+        String treinador = equipe.getTreinador() == null ? "Não há treinador" : equipe.getTreinador().getNome();
+        System.out.println("Treinador: " + treinador);
         System.out.println("Jogadores:");
         for (Jogador jogador : equipe.getJogadorList()) {
             System.out.println(jogador.getNome());
         }
+
+        System.out.print("Digite 0 para voltar ao menu ");
+        Integer voltar = sc.nextInt();
+        if (voltar == 0) {
+            exibirMenuOpcoes(campeonato);
+        }
+
+        sc.close();
     }
 
-    public static String escolherEquipe(){
+    public String escolherEquipe() {
         Scanner sc = new Scanner(System.in);
         System.out.print("Digite o nome da equipe: ");
         String equipe = sc.nextLine();
-        sc.close();
 
         return equipe;
     }
 
-    public static void limparConsole() {
+    public void limparConsole() {
         for (int i = 0; i < 100; i++) {
             System.out.println();
         }

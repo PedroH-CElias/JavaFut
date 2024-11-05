@@ -14,11 +14,6 @@ public class Partida implements EstatisticasService {
     public Partida() {
     }
 
-    public Partida(Equipe equipeVencedora, Integer quantidadeGols) {
-        this.equipeVencedora = equipeVencedora;
-        this.quantidadeGols = quantidadeGols;
-    }
-
     public void adicionarEquipe(Equipe equipe){
         equipeList.add(equipe);
     }
@@ -40,6 +35,19 @@ public class Partida implements EstatisticasService {
 
     public void setQuantidadeGols(Integer quantidadeGols) {
         this.quantidadeGols = quantidadeGols;
+    }
+
+    public List<Equipe> getEquipeList() {
+        return equipeList;
+    }
+    public String simularPartida(){
+        Equipe equipe1 = equipeList.get(0);
+        Equipe equipe2 = equipeList.get(1);
+
+        Integer golsEquipe1 = (int) (Math.random() * 11);
+        Integer golsEquipe2 = (int) (Math.random() * 11);
+
+        return equipe1.getNome() + " " + golsEquipe1 + " X " + equipe2.getNome() + " " + golsEquipe2;
     }
 
     @Override

@@ -21,7 +21,8 @@ public class Main {
 
         Campeonato campeonato = new Campeonato(equipesIniciais);
 
-        MenuService.exibirMenuOpcoes(campeonato);
+        MenuService menuService = new MenuService();
+        menuService.exibirMenuOpcoes(campeonato);
 
 
         sc.close();
