@@ -2,7 +2,8 @@ package services;
 
 import entities.*;
 
-import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class MenuService {
@@ -23,102 +24,88 @@ public class MenuService {
         System.out.println("4 - Exibir detalhes jogador.");
         System.out.println("5 - Exibir detalhes treinador.");
         System.out.println("6 - Exibir detalhes equipe.");
-        System.out.println("7 - Exibir detalhes partida.");
         System.out.println("0 - Encerrar.\n");
 
         System.out.print("Digite o número da opção escolhida: ");
         int opcaoEscolhida = sc.nextInt();
+        boolean equipeEncontrada = false;
         switch (opcaoEscolhida) {
             case 1:
-                if (campeonato.getEquipes().isEmpty()) {
-                    System.out.println("Não há equipes cadastradas!");
-                } else {
-                    String equipeEscolhida = escolherEquipe();
-                    for (Equipe equipe : campeonato.getEquipes()) {
-                        if (equipe.getNome().equals(equipeEscolhida)) {
-                            cadastarJogador(equipe);
-                        } else {
-                            System.out.println("Equipe não cadastrada!");
-                            try {
-                                Thread.sleep(2000);
-                            } catch (InterruptedException e) {
-                                throw new RuntimeException(e);
-                            }
+                String equipe1 = escolherEquipe();
 
-                            exibirMenuOpcoes(campeonato);
-                        }
+                for (Equipe equipe : campeonato.getEquipes()) {
+                    if (equipe.getNome().equals(equipe1)) {
+                        cadastrarJogador(equipe);
                         break;
                     }
                 }
+
+                System.out.println("\nEquipe não cadastrada!");
+                exibirOpcaoVoltarMenu();
                 break;
+
             case 2:
-                if (campeonato.getEquipes().isEmpty()) {
-                    System.out.println("Não há equipes cadastradas!");
-                } else {
-                    String equipeEscolhida = escolherEquipe();
-                    for (Equipe equipe : campeonato.getEquipes()) {
-                        if (equipe.getNome().equals(equipeEscolhida)) {
-                            cadastarTreinador(equipe);
-                        } else {
-                            System.out.println("Equipe não cadastrada!");
-                            try {
-                                Thread.sleep(2000);
-                            } catch (InterruptedException e) {
-                                throw new RuntimeException(e);
-                            }
+                String equipe2 = escolherEquipe();
 
-                            exibirMenuOpcoes(campeonato);
-                        }
+                for (Equipe equipe : campeonato.getEquipes()) {
+                    if (equipe.getNome().equals(equipe2)) {
+                        cadastrarTreinador(equipe);
                         break;
                     }
                 }
+
+                System.out.println("\nEquipe não cadastrada!");
+                exibirOpcaoVoltarMenu();
                 break;
+
             case 3:
                 simularPartida();
                 break;
             case 4:
-                System.out.println("d");
+                String nomeJogador = escolherJogador();
+
+                List<Jogador> jogadores = new ArrayList<>();
+
+
+                campeonato.getEquipes().forEach(equipe -> {
+                    jogadores.addAll(equipe.getJogadores());
+                });
+
+
+
+
                 break;
             case 5:
                 System.out.println("e");
                 break;
             case 6:
-                if (campeonato.getEquipes().isEmpty()) {
-                    System.out.println("Não há equipes cadastradas!");
-                } else {
-                    String equipeEscolhida = escolherEquipe();
-                    for (Equipe equipe : campeonato.getEquipes()) {
-                        if (equipe.getNome().equals(equipeEscolhida)) {
-                            exibirDetalhesEquipe(equipe);
-                        } else {
-                            System.out.println("Equipe não cadastrada!");
-                            try {
-                                Thread.sleep(2000);
-                            } catch (InterruptedException e) {
-                                throw new RuntimeException(e);
-                            }
+                String equipe3 = escolherEquipe();
 
-                            exibirMenuOpcoes(campeonato);
-                        }
+                for (Equipe equipe : campeonato.getEquipes()) {
+                    if (equipe.getNome().equals(equipe3)) {
+                        exibirDetalhesEquipe(equipe);
+                        equipeEncontrada = true;
                         break;
                     }
                 }
+
+                System.out.println("\nEquipe não cadastrada!");
+                exibirOpcaoVoltarMenu();
                 break;
-            case 7:
-                System.out.println("g");
-                break;
+
             case 0:
                 System.out.println("JAVA FUT ENCERRADO!");
                 break;
             default:
                 System.out.println("OPÇÃO INVÁLIDA!");
+                System.out.println("JAVA FUT ENCERRADO!");
                 break;
         }
 
         sc.close();
     }
 
-    public void cadastarJogador(Equipe equipe) {
+    public void cadastrarJogador(Equipe equipe) {
         Scanner sc = new Scanner(System.in);
 
         limparConsole();
@@ -157,21 +144,14 @@ public class MenuService {
 
         equipe.adicionarJogador(jogador);
 
-        System.out.print("\n\nJOGADOR CADASTRADO COM SUCESSO!");
+        System.out.print("\n\nJOGADOR CADASTRADO COM SUCESSO!\n");
 
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-
-        limparConsole();
-        exibirMenuOpcoes(campeonato);
+        exibirOpcaoVoltarMenu();
 
         sc.close();
     }
 
-    public void cadastarTreinador(Equipe equipe) {
+    public void cadastrarTreinador(Equipe equipe) {
         Scanner sc = new Scanner(System.in);
 
         limparConsole();
@@ -205,16 +185,9 @@ public class MenuService {
 
         equipe.setTreinador(treinador);
 
-        System.out.print("\n\nTREINADOR CADASTRADO COM SUCESSO!");
+        System.out.print("\n\nTREINADOR CADASTRADO COM SUCESSO!\n");
 
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-
-        limparConsole();
-        exibirMenuOpcoes(campeonato);
+        exibirOpcaoVoltarMenu();
 
         sc.close();
     }
@@ -222,39 +195,50 @@ public class MenuService {
     public void simularPartida() {
         Scanner sc = new Scanner(System.in);
         Partida partida = new Partida();
-        System.out.print("Digite a primeira equipe: ");
-        String equipe1 = sc.nextLine();
-        System.out.print("Digite a segunda equipe: ");
-        String equipe2 = sc.nextLine();
+        System.out.print("Digite o nome da primeira equipe: ");
+        String primeiraEquipe = sc.nextLine();
+        System.out.print("Digite o nome da segunda equipe: ");
+        String segundaEquipe = sc.nextLine();
 
-        for (Equipe equipe : campeonato.getEquipes()) {
-            if (equipe.getNome().equals(equipe1) || equipe.getNome().equals(equipe2)) {
-                partida.adicionarEquipe(equipe);
+        for (Equipe equipeDoCampeonato : campeonato.getEquipes()) {
+            if (equipeDoCampeonato.getNome().equals(primeiraEquipe) || equipeDoCampeonato.getNome().equals(segundaEquipe)) {
+                partida.adicionarEquipe(equipeDoCampeonato);
             }
         }
 
-        System.out.println(partida.simularPartida());
+        if (partida.getEquipes().isEmpty() || partida.getEquipes().size() != 2) {
+            System.out.println("\nEquipes inválidas!");
+        } else {
+            partida.simularPartida();
+
+            System.out.println("\nEquipe vencedora: " + partida.getEquipeVencedora());
+            System.out.println("Placar: " + partida.getPlacar());
+            System.out.println("Quantidade de gols na partida: " + partida.getQuantidadeGols());
+        }
+
+        exibirOpcaoVoltarMenu();
 
         sc.close();
     }
 
+    public void exibirDetalhesJogador(Jogador jogador) {
+        jogador.exbibirPessoa();
+
+        exibirOpcaoVoltarMenu();
+
+    }
+
     public void exibirDetalhesEquipe(Equipe equipe) {
-        Scanner sc = new Scanner(System.in);
         System.out.println("Equipe: " + equipe.getNome());
         String treinador = equipe.getTreinador() == null ? "Não há treinador" : equipe.getTreinador().getNome();
         System.out.println("Treinador: " + treinador);
         System.out.println("Jogadores:");
-        for (Jogador jogador : equipe.getJogadorList()) {
+        equipe.getJogadores().forEach(jogador -> {
             System.out.println(jogador.getNome());
-        }
+        });
 
-        System.out.print("Digite 0 para voltar ao menu ");
-        Integer voltar = sc.nextInt();
-        if (voltar == 0) {
-            exibirMenuOpcoes(campeonato);
-        }
+        exibirOpcaoVoltarMenu();
 
-        sc.close();
     }
 
     public String escolherEquipe() {
@@ -263,6 +247,28 @@ public class MenuService {
         String equipe = sc.nextLine();
 
         return equipe;
+    }
+
+    public String escolherJogador() {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Digite o nome do jogador: ");
+        String jogador = sc.nextLine();
+
+        return jogador;
+    }
+
+    public void exibirOpcaoVoltarMenu() {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("\nDigite 0 para voltar ao menu ");
+        Integer voltar = sc.nextInt();
+        if (voltar == 0) {
+            limparConsole();
+            exibirMenuOpcoes(campeonato);
+        } else {
+            System.out.println("JAVA FUT ENCERRADO!");
+
+        }
+        sc.close();
     }
 
     public void limparConsole() {

@@ -1,14 +1,12 @@
 package entities;
 
-import services.EstatisticasService;
-
 import java.util.ArrayList;
 import java.util.List;
 
-public class Equipe implements EstatisticasService {
+public class Equipe {
 
     private String nome;
-    private List<Jogador> jogadorList = new ArrayList<>();
+    private List<Jogador> jogadores = new ArrayList<>();
     private Treinador treinador;
 
     public Equipe() {
@@ -19,11 +17,11 @@ public class Equipe implements EstatisticasService {
     }
 
     public void adicionarJogador(Jogador jogador) {
-        jogadorList.add(jogador);
+        jogadores.add(jogador);
     }
 
     public void removerJogador(Jogador jogador) {
-        jogadorList.remove(jogador);
+        jogadores.remove(jogador);
     }
 
     public String getNome() {
@@ -34,8 +32,8 @@ public class Equipe implements EstatisticasService {
         this.nome = nome;
     }
 
-    public List<Jogador> getJogadorList() {
-        return jogadorList;
+    public List<Jogador> getJogadores() {
+        return jogadores;
     }
 
     public Treinador getTreinador() {
@@ -46,8 +44,4 @@ public class Equipe implements EstatisticasService {
         this.treinador = treinador;
     }
 
-    @Override
-    public void exibirDetalhes(Object equipe) {
-
-    }
 }

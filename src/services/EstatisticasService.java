@@ -1,8 +1,9 @@
 package services;
 
+import entities.Campeonato;
 import entities.Pessoa;
 
-public interface EstatisticasService <T> {
+public interface EstatisticasService {
 
-     void exibirDetalhes(T obj);
+     void exibirDetalhes(Pessoa pessoa);
 }

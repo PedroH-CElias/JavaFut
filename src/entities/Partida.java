@@ -5,53 +5,54 @@ import services.EstatisticasService;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Partida implements EstatisticasService {
+public class Partida {
 
-    private Equipe equipeVencedora;
+    private String equipeVencedora;
     private Integer quantidadeGols;
-    private List<Equipe> equipeList = new ArrayList<>();
+    private String placar;
+    private List<Equipe> equipes = new ArrayList<>();
 
     public Partida() {
     }
 
     public void adicionarEquipe(Equipe equipe){
-        equipeList.add(equipe);
-    }
-    public void removerEquipe(Equipe equipe){
-        equipeList.remove(equipe);
+        equipes.add(equipe);
     }
 
-    public Equipe getEquipeVencedora() {
+    public String getEquipeVencedora() {
         return equipeVencedora;
-    }
-
-    public void setEquipeVencedora(Equipe equipeVencedora) {
-        this.equipeVencedora = equipeVencedora;
     }
 
     public Integer getQuantidadeGols() {
         return quantidadeGols;
     }
 
-    public void setQuantidadeGols(Integer quantidadeGols) {
-        this.quantidadeGols = quantidadeGols;
+    public String getPlacar() {
+        return placar;
     }
 
-    public List<Equipe> getEquipeList() {
-        return equipeList;
-    }
-    public String simularPartida(){
-        Equipe equipe1 = equipeList.get(0);
-        Equipe equipe2 = equipeList.get(1);
-
-        Integer golsEquipe1 = (int) (Math.random() * 11);
-        Integer golsEquipe2 = (int) (Math.random() * 11);
-
-        return equipe1.getNome() + " " + golsEquipe1 + " X " + equipe2.getNome() + " " + golsEquipe2;
+    public List<Equipe> getEquipes() {
+        return equipes;
     }
 
-    @Override
-    public void exibirDetalhes(Object partida) {
+    public void simularPartida(){
+        Equipe primeraEquipe = equipes.get(0);
+        Equipe segundaEquipe = equipes.get(1);
+
+        Integer golsPrimeraEquipe = (int) (Math.random() * 5);
+        Integer golsSegundaEquipe = (int) (Math.random() * 5);
+
+        quantidadeGols = golsPrimeraEquipe + golsSegundaEquipe;
+
+        if (golsPrimeraEquipe > golsSegundaEquipe)  {
+            equipeVencedora = primeraEquipe.getNome();
+        } else if (golsSegundaEquipe > golsPrimeraEquipe) {
+            equipeVencedora = segundaEquipe.getNome();
+        } else {
+            equipeVencedora = "Não há equipe vencedora! Empate!";
+        }
+
+        placar = golsPrimeraEquipe + " X " + golsSegundaEquipe;
 
     }
 }

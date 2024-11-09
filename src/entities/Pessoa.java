@@ -51,4 +51,8 @@ public class Pessoa{
         this.nota = nota;
     }
 
+    public void exbibirPessoa() {
+        System.out.println("Nome: " + nome);
+    }
+
 }

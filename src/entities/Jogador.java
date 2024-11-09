@@ -2,20 +2,13 @@ package entities;
 
 import services.EstatisticasService;
 
-public class Jogador extends Pessoa implements EstatisticasService {
+public class Jogador extends Pessoa {
 
     private String posicao;
     private Integer numero;
     private Integer golsMarcados;
 
     public Jogador() {
-    }
-
-    public Jogador(String nome, Integer idade, Integer quantidadeTitulos, Double nota, String posicao, Integer numero, Integer golsMarcados) {
-        super(nome, idade, quantidadeTitulos, nota);
-        this.posicao = posicao;
-        this.numero = numero;
-        this.golsMarcados = golsMarcados;
     }
 
     public String getPosicao() {
@@ -42,8 +35,5 @@ public class Jogador extends Pessoa implements EstatisticasService {
         this.golsMarcados = golsMarcados;
     }
 
-    @Override
-    public void exibirDetalhes(Object jogador) {
 
-    }
 }
