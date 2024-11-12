@@ -1,6 +1,7 @@
 package services;
 
 import entities.*;
+import enums.TipoEscolha;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +30,7 @@ public class MenuService {
         boolean equipeEncontrada = false;
         switch (opcaoEscolhida) {
             case 1:
-                String equipe1 = escolherEquipe();
+                String equipe1 = escolherNome(TipoEscolha.EQUIPE);
 
                 for (Equipe equipe : campeonato.getEquipes()) {
                     if (equipe.getNome().equals(equipe1)) {
@@ -43,7 +44,7 @@ public class MenuService {
                 break;
 
             case 2:
-                String equipe2 = escolherEquipe();
+                String equipe2 = escolherNome(TipoEscolha.EQUIPE);
 
                 for (Equipe equipe : campeonato.getEquipes()) {
                     if (equipe.getNome().equals(equipe2)) {
@@ -60,7 +61,7 @@ public class MenuService {
                 simularPartida();
                 break;
             case 4:
-                String nomeJogador = escolherJogador();
+                String nomeJogador = escolherNome(TipoEscolha.JOGADOR);
 
                 List<Jogador> jogadores = new ArrayList<>();
 
@@ -80,7 +81,7 @@ public class MenuService {
 
                 break;
             case 5:
-                String nomeTreinador = escolherTreinador();
+                String nomeTreinador = escolherNome(TipoEscolha.TREINADOR);
                 List<Treinador> treinadores = new ArrayList<>();
                 campeonato.getEquipes().forEach(equipe -> {
                     treinadores.add(equipe.getTreinador());
@@ -97,7 +98,7 @@ public class MenuService {
                 exibirOpcaoVoltarMenu();
                 break;
             case 6:
-                String equipe3 = escolherEquipe();
+                String equipe3 = escolherNome(TipoEscolha.EQUIPE);
 
                 for (Equipe equipe : campeonato.getEquipes()) {
                     if (equipe.getNome().equals(equipe3)) {
@@ -247,27 +248,15 @@ public class MenuService {
         exibirOpcaoVoltarMenu();
 
     }
-    public String escolherEquipe() {
-        Scanner sc = new Scanner(System.in);
-        System.out.print("Digite o nome da equipe: ");
-        String equipe = sc.nextLine();
 
-        return equipe;
-    }
-    public String escolherJogador() {
+    public String escolherNome(TipoEscolha escolha) {
         Scanner sc = new Scanner(System.in);
-        System.out.print("Digite o nome do jogador: ");
+        System.out.print("Digite o nome do(a) " + escolha.toString().toLowerCase() + ": ");
         String jogador = sc.nextLine();
 
         return jogador;
     }
-    public String escolherTreinador() {
-        Scanner sc = new Scanner(System.in);
-        System.out.print("Digite o nome do treinador: ");
-        String jogador = sc.nextLine();
 
-        return jogador;
-    }
     public void exibirOpcaoVoltarMenu() {
         Scanner sc = new Scanner(System.in);
         System.out.print("\nDigite 0 para voltar ao menu ");
