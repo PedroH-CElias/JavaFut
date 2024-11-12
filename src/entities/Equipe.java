@@ -20,10 +20,6 @@ public class Equipe {
         jogadores.add(jogador);
     }
 
-    public void removerJogador(Jogador jogador) {
-        jogadores.remove(jogador);
-    }
-
     public String getNome() {
         return nome;
     }

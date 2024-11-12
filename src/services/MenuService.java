@@ -8,11 +8,9 @@ import java.util.Scanner;
 
 public class MenuService {
     private Campeonato campeonato;
-
     public void exibirTitulo() {
         System.out.println("***** JAVA FUT *****\n");
     }
-
     public void exibirMenuOpcoes(Campeonato campeonato) {
         this.campeonato = campeonato;
 
@@ -66,17 +64,37 @@ public class MenuService {
 
                 List<Jogador> jogadores = new ArrayList<>();
 
-
                 campeonato.getEquipes().forEach(equipe -> {
                     jogadores.addAll(equipe.getJogadores());
                 });
 
+                for (Jogador jogador : jogadores){
+                    if (jogador.getNome().equals(nomeJogador)) {
+                        exibirDetalhesJogador(jogador);
+                        break;
+                    }
+                }
 
-
+                System.out.println("\nJogador não cadastrado!");
+                exibirOpcaoVoltarMenu();
 
                 break;
             case 5:
-                System.out.println("e");
+                String nomeTreinador = escolherTreinador();
+                List<Treinador> treinadores = new ArrayList<>();
+                campeonato.getEquipes().forEach(equipe -> {
+                    treinadores.add(equipe.getTreinador());
+                });
+
+                for (Treinador treinador : treinadores){
+                    if (treinador != null && treinador.getNome().equals(nomeTreinador)) {
+                        exibirDetalhesTreinador(treinador);
+                        break;
+                    }
+                }
+
+                System.out.println("\nTreinador não cadastrado!");
+                exibirOpcaoVoltarMenu();
                 break;
             case 6:
                 String equipe3 = escolherEquipe();
@@ -104,7 +122,6 @@ public class MenuService {
 
         sc.close();
     }
-
     public void cadastrarJogador(Equipe equipe) {
         Scanner sc = new Scanner(System.in);
 
@@ -124,10 +141,6 @@ public class MenuService {
         System.out.print("Quantidade de títulos: ");
         Integer qtdTitulos = sc.nextInt();
         jogador.setQuantidadeTitulos(qtdTitulos);
-
-        System.out.print("Nota: ");
-        Double nota = sc.nextDouble();
-        jogador.setNota(nota);
 
         System.out.print("Posição: ");
         sc.nextLine();
@@ -150,7 +163,6 @@ public class MenuService {
 
         sc.close();
     }
-
     public void cadastrarTreinador(Equipe equipe) {
         Scanner sc = new Scanner(System.in);
 
@@ -171,10 +183,6 @@ public class MenuService {
         Integer qtdTitulos = sc.nextInt();
         treinador.setQuantidadeTitulos(qtdTitulos);
 
-        System.out.print("Nota: ");
-        Double nota = sc.nextDouble();
-        treinador.setNota(nota);
-
         System.out.print("Anos de experiência: ");
         Integer anosExperiencia = sc.nextInt();
         treinador.setAnosExperiencia(anosExperiencia);
@@ -191,7 +199,6 @@ public class MenuService {
 
         sc.close();
     }
-
     public void simularPartida() {
         Scanner sc = new Scanner(System.in);
         Partida partida = new Partida();
@@ -220,14 +227,14 @@ public class MenuService {
 
         sc.close();
     }
-
     public void exibirDetalhesJogador(Jogador jogador) {
-        jogador.exbibirPessoa();
-
+        jogador.exibirJogador();
         exibirOpcaoVoltarMenu();
-
     }
-
+    public void exibirDetalhesTreinador(Treinador treinador) {
+        treinador.exibirTreinador();
+        exibirOpcaoVoltarMenu();
+    }
     public void exibirDetalhesEquipe(Equipe equipe) {
         System.out.println("Equipe: " + equipe.getNome());
         String treinador = equipe.getTreinador() == null ? "Não há treinador" : equipe.getTreinador().getNome();
@@ -240,7 +247,6 @@ public class MenuService {
         exibirOpcaoVoltarMenu();
 
     }
-
     public String escolherEquipe() {
         Scanner sc = new Scanner(System.in);
         System.out.print("Digite o nome da equipe: ");
@@ -248,7 +254,6 @@ public class MenuService {
 
         return equipe;
     }
-
     public String escolherJogador() {
         Scanner sc = new Scanner(System.in);
         System.out.print("Digite o nome do jogador: ");
@@ -256,7 +261,13 @@ public class MenuService {
 
         return jogador;
     }
+    public String escolherTreinador() {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Digite o nome do treinador: ");
+        String jogador = sc.nextLine();
 
+        return jogador;
+    }
     public void exibirOpcaoVoltarMenu() {
         Scanner sc = new Scanner(System.in);
         System.out.print("\nDigite 0 para voltar ao menu ");
@@ -270,7 +281,6 @@ public class MenuService {
         }
         sc.close();
     }
-
     public void limparConsole() {
         for (int i = 0; i < 100; i++) {
             System.out.println();

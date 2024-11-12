@@ -1,7 +1,5 @@
 package entities;
 
-import services.EstatisticasService;
-
 import java.util.ArrayList;
 import java.util.List;
 

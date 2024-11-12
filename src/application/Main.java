@@ -24,7 +24,6 @@ public class Main {
         MenuService menuService = new MenuService();
         menuService.exibirMenuOpcoes(campeonato);
 
-
         sc.close();
     }
 }
