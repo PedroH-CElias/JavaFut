@@ -27,7 +27,7 @@ public class MenuService {
 
         System.out.print("Digite o número da opção escolhida: ");
         int opcaoEscolhida = sc.nextInt();
-        boolean equipeEncontrada = false;
+        
         switch (opcaoEscolhida) {
             case 1:
                 String equipe1 = escolherNome(TipoEscolha.EQUIPE);
@@ -103,7 +103,6 @@ public class MenuService {
                 for (Equipe equipe : campeonato.getEquipes()) {
                     if (equipe.getNome().equals(equipe3)) {
                         exibirDetalhesEquipe(equipe);
-                        equipeEncontrada = true;
                         break;
                     }
                 }
