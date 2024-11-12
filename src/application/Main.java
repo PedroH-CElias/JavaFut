@@ -18,7 +18,6 @@ public class Main {
         Equipe equipe2 = new Equipe("Vasco");
 
         List<Equipe> equipesIniciais = Arrays.asList(equipe1, equipe2);
-
         Campeonato campeonato = new Campeonato(equipesIniciais);
 
         MenuService menuService = new MenuService(campeonato);
