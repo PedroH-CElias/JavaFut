@@ -9,11 +9,14 @@ import java.util.Scanner;
 
 public class MenuService {
     private Campeonato campeonato;
+
+    public MenuService(Campeonato campeonato){
+        this.campeonato = campeonato;
+    }
     public void exibirTitulo() {
         System.out.println("***** JAVA FUT *****\n");
     }
-    public void exibirMenuOpcoes(Campeonato campeonato) {
-        this.campeonato = campeonato;
+    public void exibirMenuOpcoes() {
 
         Scanner sc = new Scanner(System.in);
         exibirTitulo();
@@ -27,7 +30,7 @@ public class MenuService {
 
         System.out.print("Digite o número da opção escolhida: ");
         int opcaoEscolhida = sc.nextInt();
-        
+
         switch (opcaoEscolhida) {
             case 1:
                 String equipe1 = escolherNome(TipoEscolha.EQUIPE);
@@ -262,7 +265,7 @@ public class MenuService {
         Integer voltar = sc.nextInt();
         if (voltar == 0) {
             limparConsole();
-            exibirMenuOpcoes(campeonato);
+            exibirMenuOpcoes();
         } else {
             System.out.println("JAVA FUT ENCERRADO!");
 
